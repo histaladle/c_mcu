@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
-#include "dynarray.h"
+#include "vptrarray.h"
 #include "ringmemory.h"
 #include "objectpool.h"
 
@@ -35,8 +35,8 @@ OBJECTPOOL_DECL(modbusmaster_transmission,modbusmaster_transmission_t)
 OBJECTPOOL_DECL(modbusmaster_reception,modbusmaster_reception_t)
 
 typedef struct _modbusmaster {
-    dynarray_t txframes;
-    dynarray_t rxframes;
+    vptrarray_t txframes;
+    vptrarray_t rxframes;
     int rxfinclock;
     ringmemory_t rxmem;
 } modbusmaster_t;

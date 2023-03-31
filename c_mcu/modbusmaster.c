@@ -48,8 +48,8 @@ void modbusmaster_call(modbusmaster_t *selv)
             if(crch==bytes[endindex-1] && crcl==bytes[endindex]) {
                 if(endindex-startindex+1<4) continue;
                 matched=0;
-                for(i=0;i<dynarray_count(&selv->txframes);++i) {
-                    txfrm=dynarray_at(&selv->txframes,i);
+                for(i=0;i<vptrarray_count(&selv->txframes);++i) {
+                    txfrm=vptrarray_at(&selv->txframes,i);
                     ok=1;
                     ok&=(txfrm->buffer[0]==bytes[startindex]);
                     ok&=((txfrm->buffer[1]&(~0x80)&0xff)==(bytes[startindex+1]&(~0x80)&0xff));
@@ -61,7 +61,7 @@ void modbusmaster_call(modbusmaster_t *selv)
                         memcpy(rxfrm->buffer,bytes+startindex,(size_t)(endindex-startindex+1));
                         rxfrm->bufferlen=endindex-startindex+1;
                         rxfrm->received=1;
-                        dynarray_push(&selv->rxframes,rxfrm);
+                        vptrarray_push(&selv->rxframes,rxfrm);
                         matched=1;
                         break;
                     }
@@ -74,7 +74,7 @@ void modbusmaster_call(modbusmaster_t *selv)
                     memcpy(rxfrm->buffer,bytes+startindex,(size_t)(endindex-startindex+1));
                     rxfrm->bufferlen=endindex-startindex+1;
                     rxfrm->received=1;
-                    dynarray_push(&selv->rxframes,rxfrm);
+                    vptrarray_push(&selv->rxframes,rxfrm);
                 }
             }
         }
@@ -83,8 +83,8 @@ void modbusmaster_call(modbusmaster_t *selv)
 
 void modbusmaster_init(modbusmaster_t *selv)
 {
-    dynarray_init(&selv->rxframes);
-    dynarray_init(&selv->txframes);
+    vptrarray_init(&selv->rxframes);
+    vptrarray_init(&selv->txframes);
     selv->rxfinclock=0;
     ringmemory_init(&selv->rxmem);
 }

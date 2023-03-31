@@ -25,7 +25,7 @@ void mastermodbus_call(mastermodbus_t *protocol)
 			if(crch==bytes[endindex-1] && crcl==bytes[endindex])
 			{
                 if(endindex-startindex+1<4) continue;
-                if(dynarray_count(&protocol->sessions)==0) 
+                if(vptrarray_count(&protocol->sessions)==0) 
                 {
                     do{
                         sess=mastermodbussession_alloc();
@@ -39,21 +39,21 @@ void mastermodbus_call(mastermodbus_t *protocol)
                     sess->rxlen=endindex-startindex+1;
                     memcpy(sess->rxbytes,bytes+startindex,(size_t)(endindex-startindex+1));
                     sess->received=1;
-                    dynarray_push(&protocol->sessions,sess);
+                    vptrarray_push(&protocol->sessions,sess);
                 }
                 else 
                 {
                     ok=0;
-                    for(i=0;i<dynarray_count(&protocol->sessions);i++)
+                    for(i=0;i<vptrarray_count(&protocol->sessions);i++)
                     {
-                        sess=(mastermodbussession_t*)dynarray_at(&protocol->sessions,i);
+                        sess=(mastermodbussession_t*)vptrarray_at(&protocol->sessions,i);
                         ok|=sess->transmitted;
                     }
                     if(ok)
                     {
-                        for(i=0;i<dynarray_count(&protocol->sessions);i++)
+                        for(i=0;i<vptrarray_count(&protocol->sessions);i++)
                         {
-                            sess=(mastermodbussession_t*)dynarray_at(&protocol->sessions,i);
+                            sess=(mastermodbussession_t*)vptrarray_at(&protocol->sessions,i);
                             if(sess->transmitted && !sess->received)
                             {
                                 if(bytes[startindex]!=sess->txbytes[0]) break;
@@ -86,7 +86,7 @@ void mastermodbus_call(mastermodbus_t *protocol)
                         sess->rxlen=endindex-startindex+1;
                         memcpy(sess->rxbytes,bytes+startindex,(size_t)(endindex-startindex+1));
                         sess->received=1;
-                        dynarray_push(&protocol->sessions,sess);
+                        vptrarray_push(&protocol->sessions,sess);
                     }
                 }
 			}

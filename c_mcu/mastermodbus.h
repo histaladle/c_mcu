@@ -3,7 +3,7 @@
 
 #include "stdint.h"
 #include "ringmemory.h"
-#include "dynarray.h"
+#include "vptrarray.h"
 #define MASTERMODBUS_MAX_TXLEN 16
 #define MASTERMODBUS_MAX_RXLEN 16
 typedef struct _mastermodbussession 
@@ -20,7 +20,7 @@ typedef struct _mastermodbussession
 typedef struct _mastermodbus
 {
     ringmemory_t rxmem;
-    dynarray_t sessions;
+    vptrarray_t sessions;
     int rxfinclock;
 } mastermodbus_t;
 extern void mastermodbus_call(mastermodbus_t *protocol);

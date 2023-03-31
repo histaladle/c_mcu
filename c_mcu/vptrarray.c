@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "dynarray.h"
-void *dynarray_last(dynarray_t *array)
+#include "vptrarray.h"
+void *vptrarray_last(vptrarray_t *array)
 {
     if(array==NULL)
     {
@@ -13,27 +13,27 @@ void *dynarray_last(dynarray_t *array)
     return array->buff[array->count-1];
 }
 
-void *dynarray_at(dynarray_t *array,int index)
+void *vptrarray_at(vptrarray_t *array,int index)
 {
     if(array==NULL)
     {
         return NULL;
     }
-    if(array->count<=0||index>=DYNARRAY_BUFF_SIZE)
+    if(array->count<=0||index>=VPTRARRAY_BUFF_SIZE)
     {
         return NULL;
     }
     return array->buff[index];
 }
 
-int dynarray_erase(dynarray_t *array,int index)
+int vptrarray_erase(vptrarray_t *array,int index)
 {
     int i=0;
     if(array==NULL)
     {
         return -1;
     }
-    if(array->count<=0||index<0||index>=array->count||index>=DYNARRAY_BUFF_SIZE)
+    if(array->count<=0||index<0||index>=array->count||index>=VPTRARRAY_BUFF_SIZE)
     {
         return -1;
     }
@@ -42,7 +42,7 @@ int dynarray_erase(dynarray_t *array,int index)
     {
         array->buff[i]=array->buff[i+1];
     }
-    for(i=array->count-1;i<DYNARRAY_BUFF_SIZE;i++)
+    for(i=array->count-1;i<VPTRARRAY_BUFF_SIZE;i++)
     {
         array->buff[i]=NULL;
     }
@@ -50,14 +50,14 @@ int dynarray_erase(dynarray_t *array,int index)
     return 0;
 }
 
-int dynarray_insert(dynarray_t *array,int index,void *p)
+int vptrarray_insert(vptrarray_t *array,int index,void *p)
 {
     int i=0;
     if(array==NULL)
     {
         return -1;
     }
-    if(array->count<=0||index<0||index>array->count||index>=DYNARRAY_BUFF_SIZE||array->count>DYNARRAY_BUFF_SIZE)
+    if(array->count<=0||index<0||index>array->count||index>=VPTRARRAY_BUFF_SIZE||array->count>VPTRARRAY_BUFF_SIZE)
     {
         return -1;
     }
@@ -70,13 +70,13 @@ int dynarray_insert(dynarray_t *array,int index,void *p)
     return 0;
 }
 
-int dynarray_push(dynarray_t *array,void *p)
+int vptrarray_push(vptrarray_t *array,void *p)
 {
     if(array==NULL)
     {
         return -1;
     }
-    if(array->count<=0||array->count>DYNARRAY_BUFF_SIZE)
+    if(array->count<=0||array->count>VPTRARRAY_BUFF_SIZE)
     {
         array->count=0;
     }
@@ -85,12 +85,12 @@ int dynarray_push(dynarray_t *array,void *p)
     return 0;
 }
 
-int dynarray_count(dynarray_t *array)
+int vptrarray_count(vptrarray_t *array)
 {
     return array->count;
 }
 
-int dynarray_contain(dynarray_t *array, void *p)
+int vptrarray_contain(vptrarray_t *array, void *p)
 {
     int i=0,t=-1;
     for(i=0;i<array->count;i++)
@@ -104,7 +104,7 @@ int dynarray_contain(dynarray_t *array, void *p)
     return t;
 }
 
-dynarray_t *dynarray_init(dynarray_t *array)
+vptrarray_t *vptrarray_init(vptrarray_t *array)
 {
     int i=0;
     if(array==NULL)
@@ -112,7 +112,7 @@ dynarray_t *dynarray_init(dynarray_t *array)
         return NULL;
     }
     array->count=0;
-    for(i=0;i<DYNARRAY_BUFF_SIZE;i++)
+    for(i=0;i<VPTRARRAY_BUFF_SIZE;i++)
     {
         array->buff[i]=NULL;
     }
